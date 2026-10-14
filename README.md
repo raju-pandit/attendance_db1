@@ -1,4 +1,6 @@
-# Employee Attendance & Analytics API
+# attendance_db1
+
+## Employee Attendance & Analytics API
 
 FastAPI + MongoDB (6.0+). All application code is in `app/main.py`.
 
@@ -32,4 +34,4 @@ Copy-Item .env.example .env
 uvicorn app.main:app --port 8000
 ```
 
-MongoDB must be running and reachable before the API starts; startup creates its indexes.\n
+MongoDB must be running and reachable before the API starts; startup creates its indexes.
