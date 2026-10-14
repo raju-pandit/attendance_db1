@@ -322,7 +322,10 @@ class PunchInRequest(BaseModel):
 
 class PunchOutRequest(BaseModel):
     emp_code: str
-    punched_at: Optional[EpochMillis] = None
+    punched_at: Optional[EpochMillis] = Field(
+        default=None,
+        description="Epoch milliseconds, not seconds. Omit this field to use the current time.",
+    )
 
 
 class RegularizeRequest(BaseModel):
@@ -681,8 +684,12 @@ def punch_out(body: PunchOutRequest):
 @app.get("/attendance")
 def list_attendance(
     emp_code: Optional[str] = None,
-    date_from: Optional[str] = Query(None, pattern=DATE_PATTERN),
-    date_to: Optional[str] = Query(None, pattern=DATE_PATTERN),
+    date_from: Optional[str] = Query(
+        None, pattern=DATE_PATTERN, description="Inclusive calendar date in YYYY-MM-DD format, e.g. 2026-07-01."
+    ),
+    date_to: Optional[str] = Query(
+        None, pattern=DATE_PATTERN, description="Inclusive calendar date in YYYY-MM-DD format, e.g. 2026-07-31."
+    ),
     status: Optional[Status] = None,
     page: int = Query(1, ge=1),
     page_size: int = Query(20, ge=1, le=100),
